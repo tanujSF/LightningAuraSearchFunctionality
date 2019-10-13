@@ -1,0 +1,15 @@
+.THIS {
+}
+.THIS .clear-btn {
+    position: absolute;
+    right: -215px;
+    top: 0px;
+}
+@media (max-width: 767px) {
+    .THIS .clear-btn {
+        right: auto;
+        left: 150px;
+        top: 104px;
+    }    
+    
+}
