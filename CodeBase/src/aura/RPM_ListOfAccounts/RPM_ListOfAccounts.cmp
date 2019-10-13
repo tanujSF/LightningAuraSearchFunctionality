@@ -1,0 +1,117 @@
+<aura:component controller="RPM_ListOfAccountsController"
+    implements="flexipage:availableForAllPageTypes,force:lightningQuickAction,force:hasRecordId" access="global">
+
+    <!--Declare Attributes-->
+    <aura:attribute name="ListOfAccount" type="Account[]" />
+    <aura:attribute name="selectedCount" type="integer" default="0" />
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="Accounts" type="Account[]" />
+    <aura:attribute name="form" type="Aura.Component[]" />
+    <aura:attribute name="ListEmpty" type="boolean" default="false" />
+    <aura:attribute name="ListNotEmpty" type="boolean" default="false" />
+    <aura:attribute name="isCallFromAddPage" type="boolean" />
+    <aura:attribute name="selectAllCheckBoxValue" type="boolean" />
+    <aura:attribute name="toMakeReadOnly" type="boolean" />
+    <aura:attribute name="URL" type="String" default="{!$Label.c.RPM_ProjectBase_URL}" />
+    <aura:registerEvent name="navigateToAddAccount" type="c:RPM_NavigateToAddAccounts" />
+
+
+
+    <aura:registerEvent name="GetNewAccountsFromProjectAfterDelete" type="c:RPM_GetNewAccountsFromProjectAfterDelete" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit }" />
+
+    <table class="slds-table slds-table_bordered slds-max-medium-table_stacked-horizontal">
+
+        <thead>
+            <tr class="slds-text-title_caps">
+                <th class="slds-cell-shrink" scope="col">
+                    <label class="slds-checkbox">
+                        <!--header checkbox for select all-->
+                        <ui:inputCheckbox aura:id="box3" value="{!v.selectAllCheckBoxValue}" change="{!c.selectAll}" />
+                        <span class="slds-checkbox--faux"></span>
+                        <span class="slds-form-element__label text"></span>
+                    </label>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="WestEd School/Site Directory">WestEd School/Site Directory
+
+                    </div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="District/Agency NCES ID"> District/Agency NCES ID
+
+                    </div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Owner Name">Owner Name
+
+                    </div>
+                </th>
+
+            </tr>
+        </thead>
+
+
+        <tbody>
+            <!--iterate account records-->
+            <aura:iteration items="{!v.Accounts}" var="account">
+                <tr class="slds-hint-parent">
+                    <td class="slds-cell-shrink" data-label="Select Row">
+                        <label class="slds-checkbox">
+                            <ui:inputCheckbox text="{!account.Id}" aura:id="boxPack" value=""
+                                change="{!c.checkboxSelect}" />
+                            <span class="slds-checkbox--faux"></span>
+                            <span class="slds-form-element__label text"></span>
+                        </label>
+                    </td>
+                    <th scope="row" data-label="Account Name">
+
+                        <div class="{!v.toMakeReadOnly == true ? 'slds-truncate disableURL' : 'slds-truncate'}"
+                            title="{!account.Name}">
+                            <ui:outputURL value="{!v.URL+account.Id+'/view?id='+v.recordId}" label="{!account.Name}" />
+                        </div>
+
+                    </th>
+                    <td data-label="Sample Name">
+                        <div class="slds-truncate" title="{!account.RPM_District_Agency_NCES_ID__c}">
+                            {!account.RPM_District_Agency_NCES_ID__c}</div>
+                    </td>
+                    <td data-label="Close Date">
+                        <div class="slds-truncate" title="{!account.Owner.Name}">{!account.Owner.Name}</div>
+                    </td>
+                </tr>
+
+            </aura:iteration>
+        </tbody>
+    </table>
+    <div class="slds-text-align_left slds-m-top_small">
+        <aura:if isTrue="{!v.toMakeReadOnly == false}">
+            <aura:if isTrue="{!v.isCallFromAddPage}">
+                <button class="slds-button slds-button_brand slds-m-bottom_small" onclick="{!c.addSelected}">Add to
+                    Project</button>
+                <aura:set attribute="else">
+                    <button class="slds-button slds-button_brand slds-m-bottom_small"
+                        onclick="{!c.deleteSelected}">Remove from Project</button>
+                </aura:set>
+            </aura:if>
+        </aura:if>
+        <button class="slds-button slds-button_neutral slds-m-bottom_small"
+            onclick="{!c.NavigateToDashboard}">Cancel</button>
+        <div class="slds-float_right">
+            <aura:if isTrue="{!v.toMakeReadOnly == false}">
+                <aura:if isTrue="{!v.isCallFromAddPage}">
+                    <button class="slds-text-align_right slds-button slds-button_brand"
+                        onclick="{!c.createRecord}">Create New School/Site</button>
+                    <aura:set attribute="else">
+                        <button class="slds-text-align_right slds-button slds-button_brand"
+                            onclick="{!c.navigateToAddAccounts}">Add School/Site</button>
+                    </aura:set>
+                </aura:if>
+            </aura:if>
+        </div>
+
+    </div>
+
+
+
+</aura:component>

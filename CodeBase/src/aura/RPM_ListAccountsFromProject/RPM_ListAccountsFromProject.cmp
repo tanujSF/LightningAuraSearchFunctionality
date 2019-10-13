@@ -1,63 +1,79 @@
 <!--
           ** Component Details***
-         Name: RPM_ListAccountsFromProject
+         Name: RPM_ListAccountsFromProject 
          Type: Lightning Component 
          Purpose: Component to display Account records
 -->
-<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
-    
-    <aura:attribute name="account" type="Account" default="{Name: '',BillingPostalCode: ''}"/>
+<aura:component
+    implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction"
+    access="global">
+
+    <aura:attribute name="account" type="Account" default="{Name: '',BillingPostalCode: ''}" />
     <aura:attribute name="fsName" type="String" />
-    <aura:attribute name="Accounts" type="Account[]"/>
-    <aura:attribute name="fields" type="Object[]"/>
+    <aura:attribute name="Accounts" type="Account[]" />
+    <aura:attribute name="fields" type="Object[]" />
     <aura:attribute name="recordId" type="Id" />
-    <aura:attribute name="page" type="integer" description="using for store page Number"/>
-    <aura:attribute name="pages" type="integer" description="using for store All Pages page Number"/>
-    <aura:attribute name="total" type="integer" description="total records count store "/>
+    <aura:attribute name="page" type="integer" description="using for store page Number" />
+    <aura:attribute name="pages" type="integer" description="using for store All Pages page Number" />
+    <aura:attribute name="total" type="integer" description="total records count store " />
     <aura:attribute name="pageSize" type="String" default="{!$Label.c.RPM_PaginationSize}" />
-    <aura:attribute name="ListEmpty" type="boolean" default="false"/>
-    <aura:attribute name="ListNotEmpty" type="boolean" default="false"/>
-    <aura:attribute name="isCallFromAddPage" type="boolean" default="false"/>
-    <aura:attribute name="selectAllCheckBoxValue" type="boolean" default="false"/>
-    <aura:attribute name="isOpen" type="boolean" default="false"/>
-    
-    <aura:attribute name="isProjectActive" type="boolean"/>
-    <aura:attribute name="isProjectNotArchived" type="boolean"/>
-    <aura:attribute name="isProjectTeamActive" type="boolean"/>
-    <aura:attribute name="toMakeReadOnly" type="boolean"/>
+    <aura:attribute name="ListEmpty" type="boolean" default="false" />
+    <aura:attribute name="ListNotEmpty" type="boolean" default="false" />
+    <aura:attribute name="isCallFromAddPage" type="boolean" default="false" />
+    <aura:attribute name="selectAllCheckBoxValue" type="boolean" default="false" />
+    <aura:attribute name="isOpen" type="boolean" default="false" />
+
+    <aura:attribute name="isProjectActive" type="boolean" />
+    <aura:attribute name="isProjectNotArchived" type="boolean" />
+    <aura:attribute name="isProjectTeamActive" type="boolean" />
+    <aura:attribute name="toMakeReadOnly" type="boolean" />
     <style>
         @media (min-width: 767px) {
             .back-dashboard {
                 margin-top: -52px;
-            } 
+            }
         }
     </style>
     <div class="slds-container" style="margin: 0px auto;">
         <div>
             <ul class="slds-list_horizontal slds-has-block-links_space slds-float_right back-dashboard">
-                <li class="slds-m-left_small"><button class="slds-text-align_right slds-button slds-button_brand" onclick="{!c.NavigateToDashboard}" >Back To Dashboard</button></li>
+                <li class="slds-m-left_small"><button class="slds-text-align_right slds-button slds-button_brand"
+                        onclick="{!c.NavigateToDashboard}">Back To Dashboard</button></li>
             </ul>
-            
-            
-            <h1 class="slds-text-heading--medium"><lightning:icon iconName="standard:account" size="small"/>&nbsp;<strong>Manage Project School/Site List</strong></h1>
-            <hr class="slds-m-vertical_small"/>
+
+
+            <h1 class="slds-text-heading--medium">
+                <lightning:icon iconName="standard:account" size="small" />&nbsp;<strong>Manage Project School/Site
+                    List</strong></h1>
+            <hr class="slds-m-vertical_small" />
             <div class="slds-grid slds-wrap slds-grid--pull-padded search-school">
-                <div class="slds-size_1-of-1 slds-medium-size_4-of-6 slds-large-size_4-of-12 slds-col--padded" style="position: relative;">
-                    <c:RPM_GetFieldSetComp fsName="RPM_Account_Search_Fields" typeName="Account"  record="{!v.account}" fields="{!v.fields}" />
-                </div>             
-                <div class="slds-size_1-of-1 slds-medium-size_2-of-6 slds-large-size_4-of-12 slds-col--padded slds-m-bottom_small">
-                    <c:RPM_SearchAccountsFromProject ListEmpty="{!v.ListEmpty}" selectAllCheckBoxValue="{!v.selectAllCheckBoxValue}" ListNotEmpty="{!v.ListNotEmpty}"  page="{!v.page}" pages="{!v.pages}"  pageSize="{!v.pageSize}" total="{!v.total}" Accounts="{!v.Accounts}" fields="{!v.fields}" fsName="RPM_Account_Search_Fields" typeName="Account" record="{!v.account}" recordId="{!v.recordId}" isCallFromAddPage="{!v.isCallFromAddPage}"/>      
+                <div class="slds-size_1-of-1 slds-medium-size_4-of-6 slds-large-size_4-of-12 slds-col--padded"
+                    style="position: relative;">
+                    <c:RPM_GetFieldSetComp fsName="RPM_Account_Search_Fields" typeName="Account" record="{!v.account}"
+                        fields="{!v.fields}" />
                 </div>
-                
+                <div
+                    class="slds-size_1-of-1 slds-medium-size_2-of-6 slds-large-size_4-of-12 slds-col--padded slds-m-bottom_small">
+                    <c:RPM_SearchAccountsFromProject ListEmpty="{!v.ListEmpty}"
+                        selectAllCheckBoxValue="{!v.selectAllCheckBoxValue}" ListNotEmpty="{!v.ListNotEmpty}"
+                        page="{!v.page}" pages="{!v.pages}" pageSize="{!v.pageSize}" total="{!v.total}"
+                        Accounts="{!v.Accounts}" fields="{!v.fields}" fsName="RPM_Account_Search_Fields"
+                        typeName="Account" record="{!v.account}" recordId="{!v.recordId}"
+                        isCallFromAddPage="{!v.isCallFromAddPage}" />
+                </div>
+
             </div>
             <aura:if isTrue="{!v.ListEmpty}">
                 <div class="slds-text-color--error"> No Result Found...</div>
             </aura:if>
             <aura:if isTrue="{!v.ListNotEmpty}">
-                <c:RPM_ListOfAccounts recordId="{!v.recordId}" selectAllCheckBoxValue="{!v.selectAllCheckBoxValue}" isCallFromAddPage="{!v.isCallFromAddPage}" Accounts="{!v.Accounts}"  toMakeReadOnly="{!v.toMakeReadOnly}"/> 
-                <c:RPM_PaginationComponent page="{!v.page}" pages="{!v.pages}"  pageSize="{!v.pageSize}" total="{!v.total}" />  
+                <c:RPM_ListOfAccounts recordId="{!v.recordId}" selectAllCheckBoxValue="{!v.selectAllCheckBoxValue}"
+                    isCallFromAddPage="{!v.isCallFromAddPage}" Accounts="{!v.Accounts}"
+                    toMakeReadOnly="{!v.toMakeReadOnly}" />
+                <c:RPM_PaginationComponent page="{!v.page}" pages="{!v.pages}" pageSize="{!v.pageSize}"
+                    total="{!v.total}" />
             </aura:if>
         </div>
-        
-    </div>   
+
+    </div>
 </aura:component>
