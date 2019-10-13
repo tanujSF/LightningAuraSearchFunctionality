@@ -1,0 +1,27 @@
+<aura:component >
+ <aura:attribute name="page" type="integer" description="using for store page Number"/>
+    <aura:attribute name="pages" type="integer" description="using for store All Pages page Number"/>
+    <aura:attribute name="total" type="integer" description="total records count store "/>
+    <aura:attribute name="pageSize" type="String" />
+    <aura:registerEvent name="navigateToRPM_PaginationPageChange" type="c:RPM_PaginationPageChange"/> 
+    
+<div class="slds-page-header slds-p-vertical_x-small" role="banner">
+    <div class="slds-grid">
+        <div class="slds-col slds-size_1-of-3"></div>
+        <div class="slds-col slds-size_1-of-3">
+            <div class="slds-align--absolute-center">
+                <aura:if isTrue="{!v.page &gt; 1}">
+                    <ui:button press="{!c.previousPage}" label="Previous Page"/>
+                </aura:if>
+                <aura:if isTrue="{!v.page &lt; v.pages}">
+                    <ui:button aura:id="nextbtn" press="{!c.nextPage}" label="Next Page"/>
+                </aura:if>
+            </div>
+        </div>
+        <div class="slds-col slds-size_1-of-3 slds-text-align_right">
+            <p class="slds-page-header__title slds-truncate">{!v.total} Records • page {!v.page} / {!v.pages}</p>
+        </div> 
+    </div>
+</div>    
+ 
+</aura:component>
