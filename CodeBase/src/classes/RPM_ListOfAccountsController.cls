@@ -3,7 +3,7 @@
 @Description             : It is used for Search  Accounts/Schools which are Active
 & also to show Accounts which are aded to Project-AccountJunction Object. & to Add/Delete the Accounts/Schools from the Project-Account Junction Object
 @Created Date            : 4/12/17
-@Author                  : Lirik Team
+@Author                  : Tanuj Tyagi
 
 *********/ 
  
